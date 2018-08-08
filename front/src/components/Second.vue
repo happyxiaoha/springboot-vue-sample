@@ -3,12 +3,13 @@
     <h1>{{ msg }}</h1>
     <h2>Essential Second</h2>
     <router-link :to="{name:'first'}">go First</router-link>
+    <button v-on:click="logout">注销</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Second',
   data () {
     return {
       msg: 'Second'
@@ -18,12 +19,20 @@ export default {
     var that = this
     that.$http({
       method: 'GET',
-      url: 'http://localhost:8080//article/get/1'
+      url: 'http://localhost:8080/article/get/1'
     }).then((data) => {
-      this.$set('msg', data.body.desc)
       console.log('data.body.desc : ' + data.body.desc)
+      this.msg = data.body.desc
+      // that.$set('msg', '' + data.body.desc)
     })
+  },
+  methods: {
+    logout: function (event) {
+      // 方法内 `this` 指向 vm
+      window.location.href = location.protocol + '//' + location.host + '/logout'
+    }
   }
+
 }
 </script>
 
