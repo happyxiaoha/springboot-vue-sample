@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <router-link :to="{name:'second'}">go Second</router-link>
+    <h2>Essential Second</h2>
+    <router-link :to="{name:'first'}">go First</router-link>
   </div>
 </template>
 
@@ -11,8 +11,18 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'First'
+      msg: 'Second'
     }
+  },
+  created () {
+    var that = this
+    that.$http({
+      method: 'GET',
+      url: 'http://localhost:8080//article/get/1'
+    }).then((data) => {
+      this.$set('msg', data.body.desc)
+      console.log('data.body.desc : ' + data.body.desc)
+    })
   }
 }
 </script>
